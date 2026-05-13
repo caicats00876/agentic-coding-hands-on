@@ -29,12 +29,12 @@ ClineはOSS（Apache License 2.0）であり、無償のVS Code拡張として�
 ## 3.4 Clineのセットアップ
 ハンズオンを実施するための環境構築を行います。
 1.  **アカウントの作成**:ハンズオンで使用するサービスのアカウントを作成します
- - Google
- - GitHUb 
+ - Google: GoogleアカウントはGoogle AI Studio（Gemini）を利用するために必要です。 [Googleアカウント作成](https://accounts.google.com/signup)
+ - GitHub: GitHubアカウントはリポジトリ管理とCodespaces利用のために必要です。 [GitHubアカウント作成](https://github.com/join)
 2.  **GitHubリポジトリの作成**: このリポジトリを各自のGitHubアカウントでフォークして使用します。
 3.  **GitHub Codespacesの作成**: ブラウザからアクセスできるクラウドベースの開発環境「GitHub Codespaces」を利用します。これにより、AIエージェントに操作を委ねてもローカルマシンに影響しない安全なサンドボックス（隔離）環境を構築できます。`devcontainer.json` を設定し、必要なツールを自動でインストールさせます。
 4.  **AWS認証情報の設定**: AWS Bedrockを利用するために、AWS SSO（IAM Identity Center）を用いて認証情報を設定します。
-4.  **Clineのセッティング**: VS Code拡張機能のClineをインストールし、API Provider（Amazon Bedrock）やModel（Claude Sonnet 4）を指定して初期設定を完了させます。
+5.  **Clineのセッティング**: VS Code拡張機能のClineをインストールし、API Provider（Amazon Bedrock）やModel（Claude Sonnet 4）を指定して初期設定を完了させます。
 
 ## 3.5 Vibe Codingの実践
 「イケてるチャットツール『Vibe Chat』を作ってください」というような「ノリ（Vibe）」を重視した大まかなプロンプトを用いて、実際にアプリケーションを構築させます。
