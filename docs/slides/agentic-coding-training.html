@@ -71,7 +71,7 @@
 </div>
 </div>
 <p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#6B7280">2</p>
-<aside>書籍の内容をすべて網羅するのではなく、体験を通じて AI への委ね方を身につけることが目的です。開発は個人で行い、最終日にチームで発表します。</aside>
+<aside>書籍の内容をすべて網羅するのではなく、体験を通じて AI への委ね方を身につけることが目的です。AI チューターと一緒に一人で進め、最終日に AI チューターへ振り返り発表をします。</aside>
 </section>
 
 <section id="story" data-transition="fade" style="background:#F7F6F2;color:#14213D;font-family:'Noto Sans JP', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:56px">
@@ -121,7 +121,7 @@
 <tr><td>Day4</td><td>Agentic Coding で実装</td><td>shared / backend / frontend を TDD で実装</td><td>PART6</td></tr>
 <tr style="background:#FFFFFF"><td>Day5</td><td>仕上げ・比較・発表</td><td>E2E、Codespaces で公開、Before/After 比較</td><td>PART7</td></tr>
 </table>
-<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#6B7280">4　　1日 9:30〜17:30（昼休憩 12:00〜13:00）</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#6B7280">4　　1日分はおよそ7〜8時間。自分のペースで進める</p>
 <aside>Day5 の PART7 は、AWS へのデプロイを Codespaces での起動と GitHub Actions の CI に読み替えています。</aside>
 </section>
 
@@ -165,7 +165,7 @@
 <li>fork して Codespaces を起動、Claude Code にサインイン</li>
 <li>小さな指示で AI の動き方を観察する</li>
 <li>Vibe Chat を作る（約3時間）</li>
-<li>チーム内で見せ合い、比較シートに記録</li>
+<li>AI チューターに見せ、比較シートに記録</li>
 </ul>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#14213D;padding:48px;border-radius:20px">
@@ -193,7 +193,7 @@
 <ul style="font-size:28px;color:#4A5568;line-height:1.7">
 <li>Vibe Chat に機能追加を依頼（60分で打ち切り）</li>
 <li>テスト・Lint・npm audit・古いライブラリを自分で調べる</li>
-<li>見つけた問題をチームで4つに分類する</li>
+<li>見つけた問題を4つに分類する</li>
 </ul>
 </div>
 <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:16px">
@@ -217,7 +217,7 @@
 </div>
 <p style="font-size:28px;color:#14213D"><b>午後：</b>4つの作法を学び、権限設定とブランチ保護でガードレールを張る。Plan モードで不具合を1つ直す。</p>
 <p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#6B7280">7</p>
-<aside>品質検証は AI に頼らず、受講者自身にコマンドを実行させます。ガードレール体験では、AI が cat コマンドなどで .env を読もうと回り込むケースがあります。権限設定だけでは防ぎきれず、多層防御が必要な好例として全体で共有してください。</aside>
+<aside>品質検証は AI に頼らず、受講者自身にコマンドを実行させます。ガードレール体験では、AI が cat コマンドなどで .env を読もうと回り込むケースがあります。権限設定だけでは防ぎきれず、多層防御が必要な好例として日報に記録させます。</aside>
 </section>
 
 <section id="practices" data-transition="fade" style="background:#14213D;color:#F7F6F2;font-family:'Noto Sans JP', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
@@ -304,7 +304,7 @@
 </div>
 <p style="font-size:30px;color:#14213D">shared → backend → frontend の順に実装。カバレッジ80%以上を保つ。<br><span style="color:#4A5568">パッケージが変わるたびに新しい会話を始め、llms.txt で最新の公式情報を参照させる。</span></p>
 <p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#6B7280">10</p>
-<aside>最も遅れが出やすい日です。frontend は Day5 午前まで延長してよいことを朝に伝えておきます。AI がテストを書かずに実装を進めていたら、受講者から「テストはどこ？」と AI に聞かせます。</aside>
+<aside>最も遅れが出やすい日です。frontend は Day5 の前半まで延長してよいことを最初に伝えておきます。AI がテストを書かずに実装を進めていたら、受講者から「テストはどこ？」と AI に聞かせます。</aside>
 </section>
 
 <section id="vibeorder" data-transition="fade" style="background:#F7F6F2;color:#14213D;font-family:'Noto Sans JP', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
@@ -352,7 +352,7 @@
 <tr style="background:#FFFFFF"><td>変更後の安心感（1〜5）</td><td>Day2 に記録</td><td>Day5 に記録</td></tr>
 </table>
 <p style="font-size:28px;color:#4A5568">比べるのは速さだけではない。<b style="color:#14213D">壊れたことにすぐ気づけるか、安心して変更できるか。</b></p>
-<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#6B7280">12　　午前：E2E と CI、Codespaces で公開 ／ 午後：チーム発表と全体振り返り</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#6B7280">12　　前半：E2E と CI、Codespaces で公開 ／ 後半：振り返り発表と自己評価</p>
 <aside>研修の山場です。時間が足りない場合は E2E テストを1フローに簡略化し、比較の時間を確保します。発表では数字だけでなく「自分の役割がどう変わったか」を語らせると理解が深まります。</aside>
 </section>
 
@@ -369,47 +369,48 @@
 <tr><td>ガードレール</td><td>権限設定とブランチ保護を設定し、その意図を説明できる</td></tr>
 <tr style="background:#FFFFFF"><td>振り返り</td><td>比較シートの数字をもとに、自分の役割の変化を説明できる</td></tr>
 </table>
-<p style="font-size:26px;color:#4A5568">提出物：自分の fork リポジトリ、比較シート、日報（5日分）、チーム発表資料</p>
+<p style="font-size:26px;color:#4A5568">最終日に AI チューターと一緒に自己評価します。提出物：自分の fork、比較シート、日報（5日分）、振り返り発表資料、自己評価シート</p>
 <p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#6B7280">13</p>
-<aside>各観点は3段階（できている／おおむねできている／要支援）で評価します。詳しくは講師ガイドのルーブリックを参照してください。</aside>
+<aside>各観点は3段階（できている／おおむねできている／要支援）で評価します。記入には docs/worksheets/自己評価シート.md を使います。</aside>
 </section>
 
-<section id="prep" data-transition="fade" style="background:#F7F6F2;color:#14213D;font-family:'Noto Sans JP', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<section id="tutor" data-transition="fade" style="background:#F7F6F2;color:#14213D;font-family:'Noto Sans JP', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
 <div style="display:flex;flex-direction:column;gap:16px">
-<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;color:#C2621F;letter-spacing:3px">PREPARATION</p>
-<h2 style="font-size:64px;font-weight:700">講師の事前準備</h2>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;color:#C2621F;letter-spacing:3px">AI TUTOR</p>
+<h2 style="font-size:64px;font-weight:700">AI チューターと一緒に進める</h2>
 </div>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
 <div style="display:flex;flex-direction:column;gap:16px;background:#FFFFFF;padding:44px;border-radius:20px;border:1px solid #E2DFD6">
-<x-icon name="Key" style="color:#E8833A;width:56px;height:56px"></x-icon>
-<h3 style="font-size:34px;font-weight:700">アカウント</h3>
+<x-icon name="Chat" style="color:#E8833A;width:56px;height:56px"></x-icon>
+<h3 style="font-size:34px;font-weight:700">案内と講義</h3>
 <ul style="font-size:26px;color:#4A5568;line-height:1.6">
-<li>Claude の社内契約を全員に割当</li>
-<li>研修用 Organization へ招待</li>
-<li>AI 利用量の目安と上限</li>
+<li>手順を1ステップずつ案内</li>
+<li>ミニ講義とスライドの説明</li>
+<li>中断しても続きから再開</li>
 </ul>
 </div>
 <div style="display:flex;flex-direction:column;gap:16px;background:#FFFFFF;padding:44px;border-radius:20px;border:1px solid #E2DFD6">
-<x-icon name="Settings" style="color:#E8833A;width:56px;height:56px"></x-icon>
-<h3 style="font-size:34px;font-weight:700">GitHub</h3>
+<x-icon name="Check" style="color:#E8833A;width:56px;height:56px"></x-icon>
+<h3 style="font-size:34px;font-weight:700">画面で確認</h3>
 <ul style="font-size:26px;color:#4A5568;line-height:1.6">
-<li>Codespaces（4コア以上）と課金</li>
-<li>Actions の利用枠</li>
-<li>Public ポート公開の禁止</li>
+<li>Claude in Chrome で画面を見る</li>
+<li>チェックポイントを判定</li>
+<li>研修のルールを守らせる</li>
 </ul>
 </div>
 <div style="display:flex;flex-direction:column;gap:16px;background:#FFFFFF;padding:44px;border-radius:20px;border:1px solid #E2DFD6">
-<x-icon name="Wrench" style="color:#E8833A;width:56px;height:56px"></x-icon>
-<h3 style="font-size:34px;font-weight:700">リハーサル</h3>
+<x-icon name="Users" style="color:#E8833A;width:56px;height:56px"></x-icon>
+<h3 style="font-size:34px;font-weight:700">対話の相手</h3>
 <ul style="font-size:26px;color:#4A5568;line-height:1.6">
-<li>講師が Day1〜5 を通しで実施</li>
-<li>救済用の完成版を別ブランチに</li>
-<li>当日のバージョンで動作確認</li>
+<li>問題の分類を問いかけで深める</li>
+<li>振り返り発表の聞き手</li>
+<li>自己評価の根拠を一緒に確認</li>
 </ul>
 </div>
 </div>
+<p style="font-size:28px;color:#4A5568">操作するのは自分です。AI チューターは代わりに作業しません。</p>
 <p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#6B7280">14</p>
-<aside>リファレンス実装（Vibe Order の完成版）は、遅れている受講者の救済に使います。Day3 のモノレポ構築や Day4 の実装で遅れた場合、雛形ブランチを merge させて先に進めます。</aside>
+<aside>この研修は人間の講師を置かない自学自習型です。AI チューターは Claude デスクトップアプリで tutor フォルダを開いて起動します。アカウントの登録、Codespace の操作、プロンプトの送信はすべて受講者が行い、AI チューターは案内と確認だけを行います。</aside>
 </section>
 
 <section id="closing" data-transition="fade" style="background:#E8833A;color:#14213D;font-family:'Noto Sans JP', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:40px">

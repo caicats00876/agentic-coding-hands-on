@@ -141,3 +141,10 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Claude Code
+.claude/settings.local.json
+**/.claude/settings.local.json
+
+# AI チューターの進捗（受講者ごとのローカルファイル）
+tutor/progress.md
