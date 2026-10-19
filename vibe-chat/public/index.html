@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vibe Chat</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ログイン -->
+  <div id="login" class="login">
+    <div class="login-card">
+      <div class="brand-mark big">〜</div>
+      <h1>Vibe Chat</h1>
+      <p class="tagline">チームの生産性と創造性を加速させる、次世代コラボレーションハブ</p>
+      <form id="login-form">
+        <input id="login-name" maxlength="24" placeholder="表示名を入力（例: sekigawa）" autocomplete="nickname" required />
+        <button class="btn primary" type="submit">はじめる →</button>
+      </form>
+      <ul class="feature-list">
+        <li>⚡ WebSocket によるリアルタイムチャット</li>
+        <li>📎 ドラッグ＆ドロップでライブ・ファイル共有</li>
+        <li>📝 チャットから起動する共同編集ドキュメント</li>
+        <li>🌊 「フロー」でチームの今を共有</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- アプリ本体 -->
+  <div id="app" class="app hidden">
+    <aside class="sidebar">
+      <div class="workspace">
+        <div class="brand-mark">〜</div>
+        <div class="workspace-name">Vibe Chat</div>
+        <span id="conn" class="conn" title="接続状態"></span>
+      </div>
+
+      <button id="me-card" class="me-card" title="ステータスとフローを設定"></button>
+
+      <div class="sidebar-scroll">
+        <section class="side-section">
+          <div class="side-title"><span>🌊 いまのフロー</span></div>
+          <div id="flow-board" class="flow-board"></div>
+        </section>
+
+        <section class="side-section">
+          <div class="side-title">
+            <span>チャンネル</span>
+            <button class="icon-btn" id="add-channel" title="チャンネルを作成">＋</button>
+          </div>
+          <nav id="channel-list" class="conv-list"></nav>
+        </section>
+
+        <section class="side-section">
+          <div class="side-title"><span>ダイレクトメッセージ</span></div>
+          <nav id="dm-list" class="conv-list"></nav>
+        </section>
+
+        <section class="side-section">
+          <div class="side-title"><span>ドキュメント</span></div>
+          <nav id="doc-list" class="conv-list"></nav>
+        </section>
+      </div>
+    </aside>
+
+    <main class="main" id="main">
+      <header class="main-header">
+        <div class="conv-title">
+          <div id="conv-name" class="conv-name"></div>
+          <div id="conv-topic" class="conv-topic"></div>
+        </div>
+        <div id="conv-actions" class="conv-actions"></div>
+      </header>
+      <div id="conv-banner" class="conv-banner hidden"></div>
+      <div id="messages" class="messages"></div>
+      <div id="main-uploads" class="live-uploads"></div>
+      <div id="main-composer"></div>
+      <div class="drop-overlay" id="drop-overlay">
+        <div class="drop-inner">
+          <div class="drop-icon">📎</div>
+          <div>ドロップしてチャンネルにライブ共有</div>
+        </div>
+      </div>
+    </main>
+
+    <aside id="panel" class="panel hidden">
+      <header class="panel-header">
+        <div id="panel-title" class="panel-title"></div>
+        <div id="panel-tools" class="panel-tools"></div>
+        <button class="icon-btn" id="panel-close" title="閉じる">✕</button>
+      </header>
+      <div id="panel-body" class="panel-body"></div>
+      <div class="drop-overlay" id="panel-drop">
+        <div class="drop-inner">
+          <div class="drop-icon">📎</div>
+          <div id="panel-drop-label">ドロップして共有</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div id="modal-root"></div>
+  <div id="toasts" class="toasts"></div>
+
+  <script src="/vendor/marked.js"></script>
+  <script src="/vendor/purify.js"></script>
+  <script src="ot.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
