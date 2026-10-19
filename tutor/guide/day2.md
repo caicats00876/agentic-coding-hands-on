@@ -1,6 +1,6 @@
 # Day2 チューター用ガイド
 
-手順書：`../docs/Day2_VibeCodingの限界とAgenticCodingへの転換.md`
+手順書：`docs/Day2_VibeCodingの限界とAgenticCodingへの転換.md`
 
 ## この日のねらい
 

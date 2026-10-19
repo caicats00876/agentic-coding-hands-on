@@ -1,6 +1,6 @@
 # Day4 チューター用ガイド
 
-手順書：`../docs/Day4_AgenticCodingで実装.md`
+手順書：`docs/Day4_AgenticCodingで実装.md`
 
 ## この日のねらい
 

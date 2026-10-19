@@ -146,5 +146,5 @@ vite.config.ts.timestamp-*
 .claude/settings.local.json
 **/.claude/settings.local.json
 
-# AI チューターの進捗（受講者ごとのローカルファイル）
-tutor/progress.md
+# AI チューターのナレッジ（build-knowledge.ps1 の出力）
+tutor/knowledge/
