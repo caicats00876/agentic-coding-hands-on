@@ -413,7 +413,86 @@
 <aside>この研修は人間の講師を置かない自学自習型です。AI チューターは Claude デスクトップアプリで tutor フォルダを開いて起動します。アカウントの登録、Codespace の操作、プロンプトの送信はすべて受講者が行い、AI チューターは案内と確認だけを行います。</aside>
 </section>
 
-<section id="closing" data-transition="fade" style="background:#E8833A;color:#14213D;font-family:'Noto Sans JP', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:40px">
+<section id="two-claudes" data-transition="fade" style="background:#FFFFFF;color:#14213D;font-family:'Noto Sans JP', Arial, sans-serif;padding:72px 128px 96px;display:flex;flex-direction:column;align-items:center;justify-content:center">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" style="height:880px;width:auto;display:block" font-family="'Noto Sans JP','Meiryo','Hiragino Sans',sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#14213D"/>
+    </marker>
+    <marker id="arrowGray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#6B7280"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="760" fill="#FFFFFF"/>
+
+  <!-- Title -->
+  <text x="40" y="52" font-size="30" font-weight="700" fill="#14213D">この研修には Claude が2つ登場します</text>
+  <text x="40" y="88" font-size="19" fill="#4A5568">役割も、会話（セッション）も別々です。お互いの会話の内容は知りません。</text>
+
+  <!-- You -->
+  <circle cx="600" cy="128" r="14" fill="#14213D"/>
+  <path d="M574 172 Q574 146 600 146 Q626 146 626 172 Z" fill="#14213D"/>
+  <text x="600" y="200" font-size="20" font-weight="700" fill="#14213D" text-anchor="middle">あなた（受講者）</text>
+
+  <!-- Left: PC -->
+  <rect x="40" y="250" width="500" height="440" rx="18" fill="#F7F6F2" stroke="#C9C4B6" stroke-width="2"/>
+  <text x="64" y="286" font-size="20" font-weight="700" fill="#6B7280">あなたの PC</text>
+
+  <rect x="70" y="306" width="440" height="190" rx="14" fill="#FFF4EA" stroke="#E8833A" stroke-width="3"/>
+  <text x="94" y="344" font-size="22" font-weight="700" fill="#C2621F">① AI チューター（講師役）</text>
+  <text x="94" y="378" font-size="18" fill="#14213D">場所：Claude デスクトップアプリ</text>
+  <text x="94" y="406" font-size="18" fill="#14213D">役割：研修の進め方を案内する</text>
+  <text x="94" y="434" font-size="18" fill="#14213D">話しかけること：「できた」「分からない」</text>
+  <text x="94" y="462" font-size="18" fill="#14213D">　　　　　　　　「次は何をする？」</text>
+
+  <rect x="70" y="520" width="440" height="150" rx="14" fill="#FFFFFF" stroke="#3A7BD5" stroke-width="2"/>
+  <text x="94" y="556" font-size="20" font-weight="700" fill="#2F65B0">Chrome（作業用プロファイル）</text>
+  <rect x="94" y="574" width="392" height="76" rx="8" fill="#EEF4FC" stroke="#3A7BD5" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="110" y="604" font-size="17" fill="#14213D">タブの中に Codespace（VS Code）の画面</text>
+  <text x="110" y="632" font-size="17" fill="#14213D">→ 実体は右のクラウドで動いている</text>
+
+  <!-- Right: Cloud -->
+  <rect x="660" y="250" width="500" height="440" rx="18" fill="#EEF4FC" stroke="#9DBBE6" stroke-width="2"/>
+  <text x="684" y="286" font-size="20" font-weight="700" fill="#2F65B0">クラウド（GitHub Codespaces）</text>
+
+  <rect x="690" y="306" width="440" height="230" rx="14" fill="#FFFFFF" stroke="#14213D" stroke-width="3"/>
+  <text x="714" y="344" font-size="22" font-weight="700" fill="#14213D">② Claude Code（開発の相手）</text>
+  <text x="714" y="378" font-size="18" fill="#14213D">場所：VS Code の右側のパネル（✳）</text>
+  <text x="714" y="406" font-size="18" fill="#14213D">役割：アプリを作る。ファイルを書き、</text>
+  <text x="714" y="434" font-size="18" fill="#14213D">　　　コマンドを実行する</text>
+  <text x="714" y="462" font-size="18" fill="#14213D">話しかけること：教材のプロンプト、</text>
+  <text x="714" y="490" font-size="18" fill="#14213D">　　　「直して」「起動して」</text>
+  <text x="714" y="518" font-size="16" fill="#6B7280">※ 右側の「Copilot」チャットは使わない</text>
+
+  <rect x="690" y="560" width="440" height="110" rx="14" fill="#FFFFFF" stroke="#C9C4B6" stroke-width="2"/>
+  <text x="714" y="596" font-size="20" font-weight="700" fill="#14213D">あなたのリポジトリ（fork）</text>
+  <text x="714" y="626" font-size="17" fill="#4A5568">vibe-chat/、vibe-order/ などのファイル</text>
+  <text x="714" y="652" font-size="17" fill="#4A5568">ターミナル（コマンドを打つ場所）</text>
+
+  <!-- Arrows -->
+  <path d="M540 190 L330 300" fill="none" stroke="#E8833A" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="420" y="230" font-size="17" fill="#C2621F" font-weight="700" text-anchor="end">研修について話す</text>
+
+  <path d="M660 190 L880 300" fill="none" stroke="#14213D" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="780" y="230" font-size="17" fill="#14213D" font-weight="700">開発の指示を出す</text>
+
+  <path d="M290 496 L290 516" fill="none" stroke="#6B7280" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#arrowGray)"/>
+  <text x="300" y="512" font-size="15" fill="#6B7280">画面を見るだけ</text>
+
+  <path d="M910 536 L910 556" fill="none" stroke="#14213D" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <path d="M486 612 L690 612" fill="none" stroke="#6B7280" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrowGray)"/>
+  <text x="520" y="600" font-size="15" fill="#6B7280">表示しているだけ</text>
+
+  <!-- Footer rule -->
+  <rect x="40" y="706" width="1120" height="40" rx="10" fill="#14213D"/>
+  <text x="600" y="733" font-size="19" fill="#F7F6F2" text-anchor="middle">迷ったら：「研修の進め方」は ① に、「アプリを作る作業」は ② に話しかける</text>
+</svg>
+<p style="position:absolute;left:128px;bottom:40px;width:1664px;font-size:24px;color:#6B7280">15</p>
+<aside>5日間でいちばん大事な図です。AI チューターは自分の PC の Claude デスクトップアプリ、Claude Code は Codespace の VS Code の中にいます。役割も会話も別々です。研修の進め方は AI チューターに、アプリを作る作業は Claude Code に話しかけます。</aside>
+</section>
+
+<section id="closing"data-transition="fade" style="background:#E8833A;color:#14213D;font-family:'Noto Sans JP', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:40px">
 <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:32px;letter-spacing:4px;font-weight:700">TAKEAWAY</p>
 <h1 style="font-size:96px;font-weight:900;line-height:1.25">人が意図を示し、AI が作り、<br>人が責任をもって仕上げる。</h1>
 <p style="font-size:40px;line-height:1.5">要件・テスト・規約・ガードレールを整えれば、<br>AI は速さと品質を両立できる。</p>

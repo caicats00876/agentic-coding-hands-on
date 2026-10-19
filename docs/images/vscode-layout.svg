@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" font-family="'Noto Sans JP','Meiryo','Hiragino Sans',sans-serif">
+  <title>Codespace の VS Code 画面の見方</title>
+  <rect width="1200" height="720" fill="#FFFFFF"/>
+  <text x="40" y="50" font-size="28" font-weight="700" fill="#14213D">Codespace（VS Code）の画面の見方</text>
+  <text x="40" y="84" font-size="18" fill="#4A5568">ブラウザのタブの中に、この画面が表示されます。研修で使う場所は5つだけです。</text>
+
+  <!-- Window frame -->
+  <rect x="40" y="110" width="1120" height="520" rx="12" fill="#F3F4F6" stroke="#9CA3AF" stroke-width="2"/>
+
+  <!-- Activity bar -->
+  <rect x="40" y="110" width="56" height="490" rx="12" fill="#E5E7EB"/>
+  <rect x="56" y="134" width="24" height="24" rx="4" fill="#9CA3AF"/>
+  <rect x="56" y="176" width="24" height="24" rx="4" fill="#9CA3AF"/>
+  <rect x="56" y="218" width="24" height="24" rx="4" fill="#9CA3AF"/>
+  <text x="68" y="282" font-size="24" fill="#E8833A" text-anchor="middle">✳</text>
+
+  <!-- Explorer -->
+  <rect x="96" y="110" width="230" height="490" fill="#FFFFFF" stroke="#D1D5DB"/>
+  <text x="112" y="142" font-size="15" fill="#6B7280">エクスプローラー</text>
+  <text x="120" y="172" font-size="15" fill="#14213D">▸ docs</text>
+  <text x="120" y="198" font-size="15" fill="#14213D">▸ hands-on</text>
+  <text x="120" y="224" font-size="15" fill="#14213D">▸ vibe-chat</text>
+  <text x="120" y="250" font-size="15" fill="#14213D">　README.md</text>
+
+  <!-- Editor -->
+  <rect x="326" y="110" width="494" height="300" fill="#FFFFFF" stroke="#D1D5DB"/>
+  <rect x="326" y="110" width="494" height="34" fill="#F9FAFB" stroke="#D1D5DB"/>
+  <text x="342" y="133" font-size="15" fill="#14213D">README.md ×</text>
+  <rect x="350" y="166" width="300" height="10" rx="5" fill="#E5E7EB"/>
+  <rect x="350" y="190" width="400" height="10" rx="5" fill="#E5E7EB"/>
+  <rect x="350" y="214" width="360" height="10" rx="5" fill="#E5E7EB"/>
+
+  <!-- Terminal panel -->
+  <rect x="326" y="410" width="494" height="190" fill="#FFFFFF" stroke="#D1D5DB"/>
+  <text x="342" y="436" font-size="14" fill="#6B7280">問題　出力　<tspan font-weight="700" fill="#14213D">ターミナル</tspan>　ポート</text>
+  <text x="342" y="476" font-family="Consolas,monospace" font-size="16" fill="#15803D">@you ➜ /workspaces/... (main) $ <tspan fill="#14213D">node -v</tspan></text>
+  <text x="342" y="502" font-family="Consolas,monospace" font-size="16" fill="#14213D">v24.x.x</text>
+
+  <!-- Claude panel -->
+  <rect x="820" y="110" width="340" height="490" fill="#FFFFFF" stroke="#E8833A" stroke-width="3"/>
+  <text x="840" y="142" font-size="16" font-weight="700" fill="#C2621F">✳ Claude Code</text>
+  <rect x="840" y="166" width="300" height="60" rx="8" fill="#F3F4F6"/>
+  <rect x="860" y="246" width="280" height="80" rx="8" fill="#FFF4EA"/>
+  <rect x="840" y="520" width="300" height="60" rx="8" fill="#FFFFFF" stroke="#E8833A"/>
+  <text x="852" y="556" font-size="14" fill="#9CA3AF">ここにプロンプトを入力</text>
+
+  <!-- Status bar -->
+  <rect x="40" y="600" width="1120" height="30" rx="0" fill="#2F65B0"/>
+  <text x="56" y="621" font-size="14" fill="#FFFFFF">Codespaces: ○○○　 main</text>
+
+  <!-- Callouts -->
+  <g font-size="17">
+    <circle cx="211" cy="300" r="18" fill="#E8833A"/><text x="211" y="306" fill="#FFFFFF" font-weight="700" text-anchor="middle">1</text>
+    <circle cx="573" cy="290" r="18" fill="#E8833A"/><text x="573" y="296" fill="#FFFFFF" font-weight="700" text-anchor="middle">2</text>
+    <circle cx="573" cy="556" r="18" fill="#E8833A"/><text x="573" y="562" fill="#FFFFFF" font-weight="700" text-anchor="middle">3</text>
+    <circle cx="990" cy="400" r="18" fill="#E8833A"/><text x="990" y="406" fill="#FFFFFF" font-weight="700" text-anchor="middle">4</text>
+    <circle cx="300" cy="615" r="14" fill="#E8833A"/><text x="300" y="620" fill="#FFFFFF" font-weight="700" font-size="15" text-anchor="middle">5</text>
+  </g>
+
+  <!-- Legend -->
+  <g font-size="17" fill="#14213D">
+    <text x="40" y="664"><tspan font-weight="700">1 エクスプローラー</tspan>：ファイルの一覧。クリックすると 2 に開く　　<tspan font-weight="700">2 エディタ</tspan>：ファイルの中身を見る・書く</text>
+    <text x="40" y="692"><tspan font-weight="700">3 ターミナル</tspan>：コマンドを貼り付けて Enter　　<tspan font-weight="700">4 Claude Code</tspan>：開発の指示を出す（✳ で開く）　　<tspan font-weight="700">5</tspan>：今のブランチ</text>
+  </g>
+</svg>
