@@ -1,6 +1,6 @@
 # Vibe vs Agentic 比較シート
 
-Day1、Day2、Day5 に記入し、最終日の発表で使います。
+Day1、Day2、Day5 に記入し、最終日の振り返り発表で使います。
 自分の fork にコピーして記入してください（例：`docs/worksheets/比較シート_自分の名前.md`）。
 
 ## 1. 作るとき
