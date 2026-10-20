@@ -8,6 +8,9 @@
 | :--- | :--- |
 | Codespace が「recovery mode」で起動する | devcontainer の設定エラーです。**View Creation Log** で `ERROR` の行を見てもらいます。教材の誤りの可能性が高いので、再開メモの「メモ」に記録し、研修の担当者への報告を勧めます。修正が入ったら `git pull` → `F1` → **Codespaces: Rebuild Container** |
 | 貼り付けると「クリップボードから読み取ることができません」と出る | Chrome のアドレスバー左のアイコン → サイトの設定 → クリップボードを「許可」にして再読み込み。Claude アプリの内蔵ブラウザで開いている場合は、作業用プロファイルの Chrome で開き直す |
+| Codespace に Claude のアイコン（✳）が出ない | Claude Code 拡張が自動で入らなかった。左端の拡張機能アイコン → 検索欄に `Claude Code` → 提供元 Anthropic（認証済み）の「Claude Code for VS Code」をインストールしてもらう |
+| 拡張機能のインストールで「発行元を信頼しますか?」と出る | 研修で必須の拡張機能は Claude Code だけ（提供元 Anthropic は認証済み）。それ以外の拡張機能は入れなくてよいので、キャンセルしてもらう |
+| 作業中に Codespace が止まった | アイドルタイムアウト（初期値 30分）で停止した。https://github.com/codespaces から開き直せば、作業内容は残っている。https://github.com/settings/codespaces の Default idle timeout を 120 分にしてもらう |
 | 「このフォルダー内のファイルの作成者を信頼しますか?」が出る | 「フォルダーを信頼して続行」。信頼しないと制限モードになる |
 | Codespaces が重い | 不要な dev サーバーを止める。マシンタイプの変更は利用枠に影響するので、受講者に判断してもらう |
 | Codespaces の利用枠が足りなくなりそう | 使わないときは Codespace を停止する（github.com/codespaces →「…」→ Stop codespace）。「Auto-delete codespace」に注意する |
