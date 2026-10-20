@@ -76,7 +76,12 @@ function client(name) {
     };
     ws.on('open', async () => {
       c.send({ type: 'hello', name });
-      c.init = await c.wait((m) => m.type === 'init');
+      const first = await c.wait((m) => m.type === 'init' || m.type === 'error');
+      if (first.type === 'error') {
+        ws.close();
+        return reject(new Error(first.message));
+      }
+      c.init = first;
       c.me = c.init.me;
       resolve(c);
     });
@@ -149,6 +154,31 @@ async function main() {
   const re = await alice.wait((m) => m.type === 'message:update' && m.message.reactions?.['🎉']);
   assert.deepStrictEqual(re.message.reactions['🎉'], [bob.me]);
   console.log('✓ リアクション');
+
+  // 編集: 本人だけが編集でき、editedAt が付く
+  bob.send({ type: 'message:edit', id: got.message.id, text: '乗っ取り' });
+  alice.send({ type: 'message:edit', id: got.message.id, text: 'こんにちは @bob（修正）' });
+  const ed = await bob.wait((m) => m.type === 'message:update' && m.message.id === got.message.id && m.message.editedAt);
+  assert.strictEqual(ed.message.text, 'こんにちは @bob（修正）');
+  assert.strictEqual(ed.message.replyCount, 1, '編集後もスレッド情報を保つ');
+  console.log('✓ メッセージ編集(他人のメッセージは編集できない)');
+
+  // 削除: 本人だけが削除でき、本文が消える
+  alice.send({ type: 'message:send', convId: conv, text: '消す予定' });
+  const toDel = await bob.wait((m) => m.type === 'message:new' && m.message.text === '消す予定');
+  bob.send({ type: 'message:delete', id: toDel.message.id });
+  alice.send({ type: 'message:delete', id: toDel.message.id });
+  const del = await bob.wait((m) => m.type === 'message:update' && m.message.id === toDel.message.id);
+  assert.strictEqual(del.message.deleted, true);
+  assert.strictEqual(del.message.text, '');
+  alice.send({ type: 'message:edit', id: toDel.message.id, text: '復活' });
+  await assert.rejects(bob.wait((m) => m.type === 'message:update' && m.message.id === toDel.message.id, 300));
+  console.log('✓ メッセージ削除(削除済みは編集できない)');
+
+  // ユーザー名は 20 文字まで(絵文字も 1 文字)
+  for (const name of ['あ'.repeat(20), '🎉'.repeat(20)]) (await client(name)).ws.close();
+  await assert.rejects(client('a'.repeat(21)), /20文字以内/);
+  console.log('✓ ユーザー名は 20 文字まで');
 
   // DM: 第三者には届かない
   const carol = await client('carol');

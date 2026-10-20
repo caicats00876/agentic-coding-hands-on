@@ -20,6 +20,7 @@ const UPLOAD_DIR = path.join(DATA_DIR, 'uploads');
 const STATE_FILE = path.join(DATA_DIR, 'state.json');
 const MAX_UPLOAD = 50 * 1024 * 1024; // 50MB
 const MAX_TEXT = 8000;
+const MAX_NAME = 20; // ユーザー名の最大文字数(サロゲートペアの絵文字も 1 文字と数える)
 const MAX_DOC = 200000;
 const HISTORY_PER_CONV = 300; // 接続時に送る会話ごとのメッセージ数
 
@@ -227,8 +228,9 @@ const FLOW_MODES = new Set(['focus', 'brainstorm', 'writing', 'review', 'meeting
 
 const handlers = {
   hello(ws, msg) {
-    const name = str(msg.name, 24).trim();
+    const name = typeof msg.name === 'string' ? msg.name.trim() : '';
     if (!name) return send(ws, { type: 'error', message: '名前を入力してください' });
+    if ([...name].length > MAX_NAME) return send(ws, { type: 'error', message: `名前は${MAX_NAME}文字以内で入力してください` });
     let user = Object.values(state.users).find((u) => u.name.toLowerCase() === name.toLowerCase());
     if (!user) {
       const uid = id(8);
@@ -347,6 +349,18 @@ const handlers = {
       reactions: {},
       clientId: str(msg.clientId, 40),
     });
+  },
+
+  'message:edit'(ws, msg) {
+    const m = state.messages.find((x) => x.id === msg.id);
+    if (!m || m.userId !== ws.userId || m.deleted || m.docId) return;
+    const text = str(msg.text, MAX_TEXT);
+    if (!text.trim() && !(m.files && m.files.length)) return;
+    if (text === m.text) return;
+    m.text = text;
+    m.editedAt = now();
+    saveSoon();
+    toConv(m.convId, { type: 'message:update', message: decorate(m) });
   },
 
   'message:delete'(ws, msg) {

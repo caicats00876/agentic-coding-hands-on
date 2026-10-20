@@ -434,6 +434,38 @@ a { color: #9d8bff; }
 }
 .thread-link:hover { border-color: var(--line); background: var(--bg-2); }
 .thread-link .sub { color: var(--dim); font-weight: 400; }
+.thread-link .caret { width: 14px; text-align: center; color: var(--dim); }
+.reaction.add { color: var(--dim); opacity: 0; transition: opacity 0.15s; }
+.msg:hover .reaction.add, .reaction.add:focus-visible { opacity: 1; }
+.reaction.add:hover { color: var(--text); border-color: var(--accent); }
+
+/* 折りたたみスレッド(タイムライン上で展開) */
+.thread-bar { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.thread-open { border: none; background: none; color: var(--dim); font-size: 12px; padding: 3px 6px; margin-top: 4px; border-radius: 6px; }
+.thread-open:hover { color: var(--text); background: var(--bg-2); }
+.thread-inline { margin: 0 20px 6px 70px; border-left: 2px solid var(--line); padding: 2px 0 4px; }
+.thread-inline .msg { padding-left: 12px; padding-right: 12px; }
+.thread-inline .msg-tools { right: 12px; }
+.thread-inline-reply { border: none; background: none; color: #a998ff; font-size: 12px; font-weight: 600; padding: 4px 12px; }
+.thread-inline-reply:hover { text-decoration: underline; }
+
+/* 編集 */
+.edited { color: var(--dim); font-size: 11px; margin-left: 4px; }
+.msg.editing { background: rgba(124, 92, 255, 0.07); }
+.msg-edit { margin-top: 4px; }
+.edit-input {
+  width: 100%;
+  resize: none;
+  font: inherit;
+  color: inherit;
+  background: var(--bg-2);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 8px 10px;
+  outline: none;
+}
+.edit-actions { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
+.edit-actions .hint { color: var(--dim); font-size: 11px; margin-right: auto; }
 
 /* ファイル */
 .files { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
@@ -793,6 +825,7 @@ a { color: #9d8bff; }
   .app.show-sidebar .sidebar { display: flex; position: fixed; inset: 0 30% 0 0; z-index: 60; width: auto; }
   .main-header, .messages .msg { padding-left: 12px; padding-right: 12px; }
   .composer-wrap { padding: 6px 12px 12px; }
+  .thread-inline { margin-left: 30px; margin-right: 12px; }
   .doc-panes.mode-split .doc-preview { display: none; }
 }
 .mobile-only { display: none; }

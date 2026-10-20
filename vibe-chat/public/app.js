@@ -56,6 +56,8 @@
     prevFocus: false,
     stickMain: true,
     stickThread: true,
+    expanded: new Set(), // タイムライン上で返信を展開しているスレッドの親メッセージ ID
+    editing: null, // { id, text, sel, composing } 編集中のメッセージ
   };
 
   function load(k) {
@@ -468,10 +470,16 @@
     if (!S.me) return;
     const d = new Set(dirty);
     dirty.clear();
+    // 編集欄で IME 変換中に再描画すると変換が壊れるため、確定するまで後回しにする
+    if (S.editing?.composing) {
+      for (const p of ['messages', 'thread']) if (d.delete(p)) dirty.add(p);
+    }
     if (d.has('sidebar')) renderSidebar();
     if (d.has('header')) renderHeader();
+    const editFocused = document.activeElement?.classList.contains('edit-input');
     if (d.has('messages')) renderMain();
     if (d.has('thread') && S.panel?.type === 'thread') renderThread();
+    if (d.has('messages') || d.has('thread')) restoreEditFocus(editFocused);
     if (d.has('uploads')) renderUploads();
     if (d.has('composer')) composers.forEach((c) => c.refresh());
     if (d.has('title')) {
@@ -792,11 +800,37 @@
     for (const m of list) {
       if (!prev || !sameDay(prev.ts, m.ts)) nodes.push(h('div', { class: 'day-divider' }, fmtDay(m.ts)));
       nodes.push(messageEl(m, prev, { inThread: false }));
+      if (m.replyCount && S.expanded.has(m.id)) nodes.push(inlineThread(m));
       prev = m;
     }
     el.replaceChildren(...nodes);
     if (S.stickMain) el.scrollTop = el.scrollHeight;
     else el.scrollTop = prevTop;
+  }
+
+  const threadReplies = (rootId) => [...S.messages.values()].filter((m) => m.parentId === rootId).sort((a, b) => a.ts - b.ts);
+
+  /** タイムライン上に展開したスレッドの返信一覧 */
+  function inlineThread(root) {
+    let prev = null;
+    const replies = threadReplies(root.id).map((m) => {
+      const el = messageEl(m, prev, { inThread: true });
+      prev = m;
+      return el;
+    });
+    return h(
+      'div',
+      { class: 'thread-inline' },
+      replies,
+      h('button', { class: 'thread-inline-reply', onclick: () => openThread(root.id) }, '💬 スレッドで返信する')
+    );
+  }
+
+  function toggleThread(id) {
+    if (S.expanded.has(id)) S.expanded.delete(id);
+    else S.expanded.add(id);
+    S.stickMain = false;
+    invalidate('messages');
   }
 
   function isGrouped(m, prev) {
@@ -820,12 +854,25 @@
         )
       );
     }
+    const editing = S.editing?.id === m.id && !m.deleted;
     if (m.deleted) body.append(h('div', { class: 'msg-text deleted' }, 'このメッセージは削除されました'));
-    else if (m.text) body.append(renderMd(m.text, 'msg-text md'));
-    if (m.files?.length) body.append(filesEl(m));
+    else if (editing) body.append(editBox(m));
+    else if (m.text) {
+      const text = renderMd(m.text, 'msg-text md');
+      if (m.editedAt) {
+        // 最後の段落の末尾に並べる(段落の外に置くと 1 行下にずれる)
+        const last = text.lastElementChild;
+        (last?.tagName === 'P' ? last : text).append(h('span', { class: 'edited', title: `${new Date(m.editedAt).toLocaleString()} に編集` }, '（編集済み）'));
+      }
+      body.append(text);
+    } else if (m.editedAt) body.append(h('span', { class: 'edited' }, '（編集済み）'));
+    if (!m.deleted && m.files?.length) body.append(filesEl(m));
     if (m.docId) body.append(docCard(m));
+
+    // el はリアクション行の「＋」からピッカーを開くために先に参照する
+    let el = null;
     const reactions = Object.entries(m.reactions || {});
-    if (reactions.length) {
+    if (reactions.length && !m.deleted) {
       body.append(
         h(
           'div',
@@ -833,67 +880,170 @@
           reactions.map(([emoji, users]) =>
             h(
               'button',
-              { class: 'reaction' + (users.includes(S.me) ? ' mine' : ''), title: users.map(userName).join(', '), onclick: () => send({ type: 'reaction:toggle', id: m.id, emoji }) },
+              { class: 'reaction' + (users.includes(S.me) ? ' mine' : ''), title: `${users.map(userName).join(', ')} がリアクション`, onclick: () => send({ type: 'reaction:toggle', id: m.id, emoji }) },
               emoji,
               h('span', null, users.length)
             )
-          )
+          ),
+          h('button', { class: 'reaction add', title: 'リアクションを追加', onclick: () => openReactionPicker(m, el) }, '＋')
         )
       );
     }
     if (!opts.inThread && !m.parentId && m.replyCount) {
+      const open = S.expanded.has(m.id);
       body.append(
         h(
-          'button',
-          { class: 'thread-link', onclick: () => openThread(m.id) },
-          h('span', { class: 'avatar-stack' }, (m.replyUsers || []).map((id) => avatar(S.users.get(id), 'sm', false))),
-          `${m.replyCount}件の返信`,
-          h('span', { class: 'sub' }, `最終返信 ${fmtAgo(m.lastReplyTs)}`)
+          'div',
+          { class: 'thread-bar' },
+          h(
+            'button',
+            { class: 'thread-link' + (open ? ' open' : ''), title: open ? '返信を折りたたむ' : '返信を表示', 'aria-expanded': String(open), onclick: () => toggleThread(m.id) },
+            h('span', { class: 'caret' }, open ? '▾' : '▸'),
+            h('span', { class: 'avatar-stack' }, (m.replyUsers || []).map((id) => avatar(S.users.get(id), 'sm', false))),
+            open ? `${m.replyCount}件の返信を折りたたむ` : `${m.replyCount}件の返信`,
+            h('span', { class: 'sub' }, `最終返信 ${fmtAgo(m.lastReplyTs)}`)
+          ),
+          h('button', { class: 'thread-open', title: 'スレッドをパネルで開く', onclick: () => openThread(m.id) }, '開く ↗')
         )
       );
     }
 
-    const el = h(
+    el = h(
       'div',
-      { class: 'msg' + (grouped ? ' grouped' : '') + (!mine && mentionsMe(m.text) ? ' mention' : ''), 'data-id': m.id },
+      { class: 'msg' + (grouped ? ' grouped' : '') + (editing ? ' editing' : '') + (!mine && mentionsMe(m.text) ? ' mention' : ''), 'data-id': m.id },
       h('div', { class: 'msg-gutter' }, grouped ? h('div', { class: 'hover-time' }, fmtTime(m.ts)) : avatar(u, 'lg')),
       body
     );
-    if (!m.deleted) el.append(msgTools(m, el, opts));
+    if (!m.deleted && !editing) el.append(msgTools(m, el, opts));
     return el;
+  }
+
+  function openReactionPicker(m, el) {
+    const tools = el.querySelector('.msg-tools');
+    const close = () => {
+      p.remove();
+      tools?.classList.remove('open');
+    };
+    const old = el.querySelector('.reaction-picker');
+    if (old) {
+      old.remove();
+      tools?.classList.remove('open');
+      return;
+    }
+    tools?.classList.add('open');
+    const p = h(
+      'div',
+      { class: 'reaction-picker' },
+      REACTIONS.map((e) =>
+        h('button', {
+          title: (m.reactions?.[e] || []).includes(S.me) ? 'リアクションを外す' : 'リアクションする',
+          onclick: () => {
+            send({ type: 'reaction:toggle', id: m.id, emoji: e });
+            close();
+          },
+        }, e)
+      )
+    );
+    el.append(p);
+    el.addEventListener('mouseleave', close, { once: true });
+  }
+
+  const canEdit = (m) => m.userId === S.me && !m.deleted && !m.docId;
+
+  function startEdit(m) {
+    S.editing = { id: m.id, text: m.text || '', sel: (m.text || '').length, composing: false, fresh: true };
+    invalidate('messages', 'thread');
+  }
+
+  function cancelEdit() {
+    S.editing = null;
+    invalidate('messages', 'thread');
+  }
+
+  function commitEdit(m) {
+    const text = S.editing.text;
+    if (!text.trim() && !m.files?.length) {
+      // 本文を空にして保存しようとしたら削除の確認に切り替える
+      if (confirm('本文が空です。このメッセージを削除しますか？')) send({ type: 'message:delete', id: m.id });
+      else return;
+    } else if (text !== m.text) send({ type: 'message:edit', id: m.id, text });
+    S.editing = null;
+    invalidate('messages', 'thread');
+  }
+
+  function editBox(m) {
+    const ta = h('textarea', { class: 'edit-input', rows: 1, maxlength: 8000, value: S.editing.text });
+    const autosize = () => {
+      ta.style.height = 'auto';
+      ta.style.height = Math.min(ta.scrollHeight, 300) + 'px';
+    };
+    const remember = () => {
+      if (!S.editing) return;
+      S.editing.text = ta.value;
+      S.editing.sel = ta.selectionStart;
+    };
+    ta.addEventListener('input', () => {
+      remember();
+      autosize();
+    });
+    ta.addEventListener('keyup', remember);
+    ta.addEventListener('click', remember);
+    ta.addEventListener('compositionstart', () => S.editing && (S.editing.composing = true));
+    ta.addEventListener('compositionend', () => {
+      if (!S.editing) return;
+      S.editing.composing = false;
+      remember();
+      invalidate();
+    });
+    ta.addEventListener('keydown', (e) => {
+      if (e.isComposing || e.keyCode === 229) return;
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        e.stopPropagation(); // パネルが閉じないようにする
+        cancelEdit();
+      } else if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        commitEdit(m);
+      }
+    });
+    requestAnimationFrame(autosize);
+    return h(
+      'div',
+      { class: 'msg-edit' },
+      ta,
+      h(
+        'div',
+        { class: 'edit-actions' },
+        h('span', { class: 'hint' }, 'Enter で保存 · Shift+Enter で改行 · Esc でキャンセル'),
+        h('button', { class: 'btn small', onclick: cancelEdit }, 'キャンセル'),
+        h('button', { class: 'btn small primary', onclick: () => commitEdit(m) }, '保存')
+      )
+    );
+  }
+
+  /** 再描画で作り直された編集欄にフォーカスとカーソル位置を戻す */
+  function restoreEditFocus(wasFocused) {
+    if (!S.editing) return;
+    if (!S.messages.has(S.editing.id) || S.messages.get(S.editing.id).deleted) {
+      S.editing = null;
+      return;
+    }
+    const fresh = S.editing.fresh;
+    S.editing.fresh = false;
+    // 編集を始めた直後か、再描画前に編集欄にいたときだけ戻す(別の入力欄からフォーカスを奪わない)
+    if (!fresh && !wasFocused) return;
+    const ta = document.querySelector('.msg.editing .edit-input');
+    if (!ta || document.activeElement === ta) return;
+    ta.focus();
+    const pos = Math.min(S.editing.sel, ta.value.length);
+    ta.setSelectionRange(pos, pos);
   }
 
   function msgTools(m, el, opts) {
     const tools = h('div', { class: 'msg-tools' });
-    const picker = () => {
-      const old = el.querySelector('.reaction-picker');
-      if (old) {
-        old.remove();
-        tools.classList.remove('open');
-        return;
-      }
-      tools.classList.add('open');
-      const p = h(
-        'div',
-        { class: 'reaction-picker' },
-        REACTIONS.map((e) =>
-          h('button', {
-            onclick: () => {
-              send({ type: 'reaction:toggle', id: m.id, emoji: e });
-              p.remove();
-              tools.classList.remove('open');
-            },
-          }, e)
-        )
-      );
-      el.append(p);
-      el.addEventListener('mouseleave', () => {
-        p.remove();
-        tools.classList.remove('open');
-      }, { once: true });
-    };
-    tools.append(h('button', { class: 'icon-btn', title: 'リアクション', onclick: picker }, '😊'));
+    tools.append(h('button', { class: 'icon-btn', title: 'リアクション', onclick: () => openReactionPicker(m, el) }, '😊'));
     if (!opts.inThread && !m.parentId) tools.append(h('button', { class: 'icon-btn', title: 'スレッドで返信', onclick: () => openThread(m.id) }, '💬'));
+    if (canEdit(m)) tools.append(h('button', { class: 'icon-btn', title: '編集', onclick: () => startEdit(m) }, '✏️'));
     if (m.userId === S.me)
       tools.append(
         h('button', {
@@ -1317,7 +1467,7 @@
     const list = $('#panel .messages');
     const root = S.messages.get(S.panel.msgId);
     if (!list || !root) return;
-    const replies = [...S.messages.values()].filter((m) => m.parentId === root.id).sort((a, b) => a.ts - b.ts);
+    const replies = threadReplies(root.id);
     const prevTop = list.scrollTop;
     let prev = null;
     const nodes = [h('div', { class: 'thread-root' }, messageEl(root, null, { inThread: true })), h('div', { class: 'thread-count' }, `${replies.length}件の返信`)];
@@ -1867,6 +2017,7 @@
     e.preventDefault();
     const name = $('#login-name').value.trim();
     if (!name) return;
+    if ([...name].length > 20) return toast({ title: 'エラー', body: '名前は20文字以内で入力してください', error: true });
     S.name = name;
     save('vibe.name', name);
     if ('Notification' in window && Notification.permission === 'default') Notification.requestPermission().catch(() => {});
