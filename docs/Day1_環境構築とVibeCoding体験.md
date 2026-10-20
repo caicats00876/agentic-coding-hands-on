@@ -107,12 +107,22 @@
 1.  研修リポジトリを開き、右上の **Fork** から自分のアカウントに fork します。
 2.  fork したリポジトリの URL を AI チューターに伝え、Chrome のブックマークに登録します。あわせて https://github.com/codespaces もブックマークします。
 
-#### 1-6. Codespaces を起動する
+#### 1-6. Codespaces の待ち時間を延ばす
+
+Codespace は、しばらく操作しないと自動で停止します（初期値は30分）。Vibe Coding では AI の作業を待つ時間が長いため、途中で止まらないよう延ばしておきます。
+
+1.  作業用プロファイルの Chrome で https://github.com/settings/codespaces を開きます。
+2.  **Default idle timeout** を **120** 分にして、**Save** を押します。
+    *   止まったまま放置しても、利用枠は減りません。動いている間だけ減ります。作業を終えるときは、待たずに自分で停止してください。
+    *   止まってしまった場合も、作業内容は残っています。https://github.com/codespaces から開き直せば再開できます。
+
+#### 1-7. Codespaces を起動する
 
 1.  fork したリポジトリで **Code → Codespaces → Create codespace on main** をクリックします。
 2.  数分待つと、ブラウザ上で VS Code が開きます。
     *   `.devcontainer/devcontainer.json` により、Node.js と Claude Code 拡張が自動でインストールされます。
     *   「recovery mode」の通知が出た場合は、環境の作成に失敗しています。自分で直そうとせず、AI チューターに伝えてください。
+    *   1〜2分待っても左端に Claude のアイコン（オレンジ色の ✳）が出ない場合は、Claude Code 拡張が入っていません。左端の **拡張機能** アイコン（四角が4つ）を押し、検索欄に `Claude Code` と入力します。提供元が **Anthropic**（認証済みのマーク付き）の「Claude Code for VS Code」の **インストール** を押します。
 3.  「このフォルダー内のファイルの作成者を信頼しますか?」と聞かれたら、**フォルダーを信頼して続行** を選びます。自分の fork なので信頼して問題ありません。信頼しないと「制限モード」になり、ターミナルや拡張機能が使えません。
 4.  クリップボードの読み取りを許可します。アドレスバー左のアイコン → **サイトの設定** → **クリップボード** を「許可」にします。初めて貼り付けたときに許可を求められた場合は、そこで「許可」を選んでもかまいません。
 5.  画面の各部分の名前を確認します。
@@ -200,7 +210,7 @@ git add vibe-chat && git commit -m "Day1: Vibe Chat (Vibe Coding)"
 *   AI に出した指示の回数
 *   エラーを貼り付けて直させた回数
 
-作業を終えるときは、Codespace を停止します。
+作業を終えるときは、https://github.com/codespaces で Codespace の「…」→ **Stop codespace** を押して停止します。
 
 ## チェックポイント
 

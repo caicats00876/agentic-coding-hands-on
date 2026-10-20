@@ -16,10 +16,7 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "anthropic.claude-code",
-        "biomejs.biome",
-        "ms-playwright.playwright",
-        "github.vscode-github-actions"
+        "anthropic.claude-code"
       ]
     }
   },
