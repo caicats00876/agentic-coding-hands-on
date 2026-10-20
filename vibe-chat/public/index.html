@@ -15,9 +15,10 @@
       <h1>Vibe Chat</h1>
       <p class="tagline">チームの生産性と創造性を加速させる、次世代コラボレーションハブ</p>
       <form id="login-form">
-        <input id="login-name" maxlength="20" placeholder="表示名を入力（20文字まで）" autocomplete="nickname" required />
+        <input id="login-name" placeholder="表示名を入力（20文字まで）" autocomplete="nickname" aria-describedby="login-count" required />
         <button class="btn primary" type="submit">はじめる →</button>
       </form>
+      <div id="login-count" class="login-count" aria-live="polite">0 / 20</div>
       <ul class="feature-list">
         <li>⚡ WebSocket によるリアルタイムチャット</li>
         <li>📎 ドラッグ＆ドロップでライブ・ファイル共有</li>
@@ -106,6 +107,7 @@
   <script src="/vendor/marked.js"></script>
   <script src="/vendor/purify.js"></script>
   <script src="ot.js"></script>
+  <script src="name.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

@@ -89,6 +89,23 @@ function client(name) {
   });
 }
 
+/** 任意の hello を送り、最初に返ってきた init / error をそのまま返す */
+function rawHello(payload) {
+  return new Promise((resolve, reject) => {
+    const ws = new WebSocket(`ws://127.0.0.1:${PORT}/ws`);
+    const t = setTimeout(() => (ws.close(), reject(new Error('rawHello: timeout'))), 3000);
+    ws.on('open', () => ws.send(JSON.stringify(payload)));
+    ws.on('message', (d) => {
+      const msg = JSON.parse(d);
+      if (msg.type !== 'init' && msg.type !== 'error') return;
+      clearTimeout(t);
+      ws.close();
+      resolve(msg);
+    });
+    ws.on('error', reject);
+  });
+}
+
 /** テスト用の OT クライアント(ブラウザの DocEditor と同じ状態機械) */
 function docClient(c, docId, text, rev) {
   const d = { text, rev, outstanding: null, buffer: null };
@@ -175,10 +192,34 @@ async function main() {
   await assert.rejects(bob.wait((m) => m.type === 'message:update' && m.message.id === toDel.message.id, 300));
   console.log('✓ メッセージ削除(削除済みは編集できない)');
 
-  // ユーザー名は 20 文字まで(絵文字も 1 文字)
-  for (const name of ['あ'.repeat(20), '🎉'.repeat(20)]) (await client(name)).ws.close();
-  await assert.rejects(client('a'.repeat(21)), /20文字以内/);
-  console.log('✓ ユーザー名は 20 文字まで');
+  // ユーザー名は見た目で 20 文字まで(ZWJ でつないだ絵文字や国旗も 1 文字)
+  const family = '👨‍👩‍👧';
+  const accepted = ['あ'.repeat(20), '🎉'.repeat(20), family.repeat(20), '🇯🇵'.repeat(20)];
+  for (const name of accepted) (await client(name)).ws.close();
+  console.log('✓ ユーザー名: 見た目 20 文字ならログインできる');
+
+  // サーバー側の確認: 画面を通さず WebSocket で直接送っても拒否される
+  const zalgo = 'a' + '́'.repeat(200); // 結合文字を重ねた見た目 1 文字
+  const rejected = [
+    ['a'.repeat(21), /20文字以内/],
+    ['あ'.repeat(21), /20文字以内/],
+    [family.repeat(21), /20文字以内/],
+    [zalgo, /20文字以内/],
+    ['   ', /名前を入力してください/],
+  ];
+  for (const [name, err] of rejected) await assert.rejects(client(name), err);
+  const raw = await rawHello({ type: 'hello', name: 123 });
+  assert.strictEqual(raw.type, 'error');
+  assert.match(raw.message, /名前を入力してください/);
+
+  // 拒否した名前でユーザーが作られていない
+  const checker = await client('checker');
+  const names = checker.init.users.map((u) => u.name);
+  for (const [name] of rejected) assert.ok(!names.includes(name.trim()), `拒否した名前が登録されている: ${name.slice(0, 10)}…`);
+  assert.ok(!names.includes(123) && !names.includes('123'));
+  for (const name of accepted) assert.ok(names.includes(name), '受け付けた名前が登録されている');
+  checker.ws.close();
+  console.log('✓ ユーザー名: 21 文字・重ねすぎ・空白・文字列以外はサーバーが拒否し、ユーザーも作られない');
 
   // DM: 第三者には届かない
   const carol = await client('carol');

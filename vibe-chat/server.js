@@ -11,6 +11,7 @@ const path = require('path');
 const crypto = require('crypto');
 const { WebSocketServer } = require('ws');
 const { TextOperation } = require('./public/ot.js');
+const { checkName } = require('./public/name.js');
 
 const PORT = Number(process.env.PORT) || 3000;
 const HOST = process.env.HOST || '0.0.0.0';
@@ -20,7 +21,6 @@ const UPLOAD_DIR = path.join(DATA_DIR, 'uploads');
 const STATE_FILE = path.join(DATA_DIR, 'state.json');
 const MAX_UPLOAD = 50 * 1024 * 1024; // 50MB
 const MAX_TEXT = 8000;
-const MAX_NAME = 20; // ユーザー名の最大文字数(サロゲートペアの絵文字も 1 文字と数える)
 const MAX_DOC = 200000;
 const HISTORY_PER_CONV = 300; // 接続時に送る会話ごとのメッセージ数
 
@@ -228,9 +228,8 @@ const FLOW_MODES = new Set(['focus', 'brainstorm', 'writing', 'review', 'meeting
 
 const handlers = {
   hello(ws, msg) {
-    const name = typeof msg.name === 'string' ? msg.name.trim() : '';
-    if (!name) return send(ws, { type: 'error', message: '名前を入力してください' });
-    if ([...name].length > MAX_NAME) return send(ws, { type: 'error', message: `名前は${MAX_NAME}文字以内で入力してください` });
+    const { name, error } = checkName(msg.name);
+    if (error) return send(ws, { type: 'error', message: error });
     let user = Object.values(state.users).find((u) => u.name.toLowerCase() === name.toLowerCase());
     if (!user) {
       const uid = id(8);

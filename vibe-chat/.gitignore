@@ -1,2 +1,6 @@
 # 実行時データ（チャット履歴・アップロードファイル）
 data/
+
+# E2E テスト(Playwright)の結果
+test-results/
+playwright-report/

@@ -2010,14 +2010,24 @@
   function showLogin() {
     $('#login').classList.remove('hidden');
     $('#login-name').value = S.name || '';
+    updateLoginCount();
     $('#login-name').focus();
   }
 
+  /** ログイン欄の「n / 20」を見た目の文字数で更新する */
+  function updateLoginCount() {
+    const n = VibeName.graphemeLength($('#login-name').value.trim());
+    const el = $('#login-count');
+    el.textContent = `${n} / ${VibeName.MAX_NAME}`;
+    el.classList.toggle('over', n > VibeName.MAX_NAME);
+  }
+  $('#login-name').addEventListener('input', updateLoginCount);
+
   $('#login-form').addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = $('#login-name').value.trim();
+    const { name, error } = VibeName.checkName($('#login-name').value);
     if (!name) return;
-    if ([...name].length > 20) return toast({ title: 'エラー', body: '名前は20文字以内で入力してください', error: true });
+    if (error) return toast({ title: 'エラー', body: error, error: true });
     S.name = name;
     save('vibe.name', name);
     if ('Notification' in window && Notification.permission === 'default') Notification.requestPermission().catch(() => {});
