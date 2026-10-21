@@ -11,6 +11,7 @@
 
 *   [change-request.prompt.txt](day2/change-request.prompt.txt)：Vibe Chat への追加・仕様変更依頼
 *   [inspection-commands.md](day2/inspection-commands.md)：品質検証コマンド集
+*   [plan-alternative.prompt.txt](day2/plan-alternative.prompt.txt)：Plan モードで直す不具合が見つからなかったときの代わりの課題
 *   [templates/.claude/settings.json](day2/templates/.claude/settings.json)：ガードレール（権限設定）
 
 ## Day3：開発基盤構築と要件の具体化

@@ -66,12 +66,14 @@ mkdir -p .claude/commands && cp hands-on/day3/templates/.claude/commands/*.md .c
 3.  出てきた計画を**レビュー**します。次の観点で確認し、気になる点は修正を依頼します。
     *   [ ] 各イテレーションに「確認するコマンド」があるか
     *   [ ] 追加されるライブラリの理由が説明されているか、ライセンスは MIT / Apache-2.0 / BSD か
+    *   [ ] 追加されるライブラリの版は新しいか、`npm audit` で脆弱性が出ないか
+    *   [ ] 頼んでいない作業が入っていないか
     *   [ ] 不要なものが入っていないか（KISS）
 4.  納得したら `/save-plan monorepo` で計画を保存し、ADR と Design Doc ができていることを確認します。
 
 ### 3. モノレポを構築する
 
-1.  計画を承認して実行させます。編集は自動承認（**Edit automatically**）にしてかまいません。コマンドは `settings.json` の設定に従って確認されます。
+1.  計画を承認して実行させます。承認の選択肢では **Yes, and manually approve edits** を選び、そのあと入力欄のモードを **Edit automatically** に切り替えてかまいません。コマンドは `settings.json` の設定に従って確認されます。
 2.  イテレーションが終わるごとに、自分でもターミナルで確認します。
 
     ```bash
