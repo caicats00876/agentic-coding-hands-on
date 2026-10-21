@@ -71,7 +71,11 @@ flowchart LR
 *   画面が狭いと AI の出力とコードを並べて見られません。可能であれば外部モニターを使ってください。
 
 > [!WARNING]
-> **Codespaces の利用枠に注意してください。**個人アカウントの Codespaces には、毎月の無料の利用枠（コア時間）があります。この研修の Codespace は 4 コアのため、利用枠は約30時間分です。作業を終えるときや長い休憩のときは、https://github.com/codespaces で Codespace を**停止**してください。
+> **Codespaces の利用枠に注意してください。**個人アカウントの Codespaces には、毎月の無料の利用枠（120 コア時間）があります。この研修の Codespace は 4 コアのため、利用枠は約30時間分です。試走では Day1〜Day2 で約7.5時間を使い、残りは Day3〜Day5 に必要な時間とほぼ同じでした。**無料枠だけでは、受け切る余裕がほとんどありません。**
+>
+> *   作業を終えるときや長い休憩のときは、https://github.com/codespaces で Codespace の「…」→ **Stop codespace** を押して停止します。「…」のメニューに Stop codespace がなければ、停止しています。
+> *   使った時間は、GitHub の右上のアイコン → **Settings** → **Billing and licensing** → **Usage** で、検索欄に `product:codespaces` と入力すると見られます。
+> *   残りの時間の目安：（120 − 使ったコア時間）÷ 4 ＝ あと何時間使えるか
 
 ## 受講の準備
 

@@ -35,6 +35,16 @@ Codespace の作成時に、ユーザー設定 `~/.claude/settings.json` に `"l
 
 同じメニューにある Effort と Ultracode は、既定のままにします。
 
+### Plan モードの計画を承認するとき
+
+計画が出ると、次の選択肢が表示されます。
+
+| 選択肢 | 意味 | 研修での使い方 |
+| :--- | :--- | :--- |
+| Yes, and use auto mode | 承認して、自動で進める | 使いません |
+| Yes, and manually approve edits | 承認して、編集のたびに確認する | **これを選ぶ**。確認が多すぎるときは、そのあと入力欄のモードを Edit automatically に切り替える |
+| No, keep planning | 承認せず、計画を続ける | 計画を直してほしいとき |
+
 ## 確認ダイアログ
 
 ファイルの変更やコマンドの実行の前に、確認ダイアログが出ます（表示は英語です）。
@@ -42,10 +52,12 @@ Codespace の作成時に、ユーザー設定 `~/.claude/settings.json` に `"l
 | ボタン | 意味 |
 | :--- | :--- |
 | Allow | 今回だけ許可する |
-| 常に許可（Always allow など） | 同じ種類の操作を、今後は確認なしで許可する。`.claude/settings.local.json` に保存される |
+| 常に許可（Always allow など） | 同じ種類の操作を、今後は確認なしで許可する。設定ファイルに書き込まれる |
 | Deny | 拒否する |
 
-`.claude/settings.local.json` は個人用の設定で、Git には含めません（`.gitignore` 済み）。
+> [!WARNING]
+> 「常に許可」は、**共有用の `.claude/settings.json`** に書き込まれることがあります（個人用の `.claude/settings.local.json` に書き込まれることもあります。バージョンや選んだ項目によって違います）。
+> 読まずに押し続けると、`rm -rf` や `curl` まで確認なしで動く設定ができあがります。Day2 で、この設定ファイルの中身を確かめます。
 
 ## プロジェクト設定ファイル
 
