@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" font-family="'Noto Sans JP','Meiryo','Hiragino Sans',sans-serif">
+  <title>2つの Claude：AI チューターと Claude Code</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#14213D"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="680" fill="#FFFFFF"/>
+
+  <text x="40" y="52" font-size="30" font-weight="700" fill="#14213D">この研修には Claude が2つ登場します</text>
+  <text x="40" y="88" font-size="19" fill="#4A5568">話しかける画面がちがいます。会話も別々で、お互いの内容は知りません。</text>
+
+  <!-- You -->
+  <circle cx="600" cy="124" r="14" fill="#14213D"/>
+  <path d="M574 168 Q574 142 600 142 Q626 142 626 168 Z" fill="#14213D"/>
+  <text x="600" y="194" font-size="19" font-weight="700" fill="#14213D" text-anchor="middle">あなた</text>
+  <path d="M556 160 L330 236" fill="none" stroke="#E8833A" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="438" y="182" font-size="17" fill="#C2621F" font-weight="700" text-anchor="end">研修の進め方を聞く</text>
+  <path d="M644 160 L870 236" fill="none" stroke="#14213D" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="762" y="182" font-size="17" fill="#14213D" font-weight="700">アプリを作らせる</text>
+
+  <!-- Left window: Claude desktop app -->
+  <rect x="40" y="240" width="520" height="300" rx="12" fill="#FFFFFF" stroke="#E8833A" stroke-width="3"/>
+  <rect x="40" y="240" width="520" height="40" rx="12" fill="#FFF4EA"/>
+  <rect x="40" y="268" width="520" height="12" fill="#FFF4EA"/>
+  <circle cx="64" cy="260" r="6" fill="#E8833A"/>
+  <text x="80" y="267" font-size="17" font-weight="700" fill="#C2621F">Claude デスクトップアプリ（チャット）</text>
+  <!-- chat bubbles -->
+  <rect x="300" y="300" width="230" height="40" rx="10" fill="#F3F4F6"/>
+  <text x="318" y="326" font-size="16" fill="#14213D">研修を始めて</text>
+  <rect x="64" y="354" width="380" height="64" rx="10" fill="#FFF4EA"/>
+  <text x="82" y="380" font-size="16" fill="#14213D">【ブラウザで操作】Codespace を</text>
+  <text x="82" y="404" font-size="16" fill="#14213D">起動してください…</text>
+  <rect x="64" y="480" width="472" height="40" rx="8" fill="#FFFFFF" stroke="#E8833A"/>
+  <text x="80" y="506" font-size="15" fill="#9CA3AF">「できた」「分からない」「次は？」</text>
+
+  <!-- Right window: VS Code -->
+  <rect x="640" y="240" width="520" height="300" rx="12" fill="#F3F4F6" stroke="#14213D" stroke-width="3"/>
+  <rect x="640" y="240" width="520" height="40" rx="12" fill="#E5E7EB"/>
+  <rect x="640" y="268" width="520" height="12" fill="#E5E7EB"/>
+  <text x="660" y="267" font-size="17" font-weight="700" fill="#14213D">VS Code（ブラウザの Codespace）</text>
+  <!-- editor area -->
+  <rect x="656" y="296" width="240" height="228" rx="6" fill="#FFFFFF" stroke="#D1D5DB"/>
+  <rect x="672" y="316" width="180" height="9" rx="4" fill="#E5E7EB"/>
+  <rect x="672" y="336" width="200" height="9" rx="4" fill="#E5E7EB"/>
+  <rect x="672" y="356" width="150" height="9" rx="4" fill="#E5E7EB"/>
+  <text x="776" y="470" font-size="14" fill="#9CA3AF" text-anchor="middle">ファイル・ターミナル</text>
+  <!-- Claude Code panel -->
+  <rect x="908" y="296" width="236" height="228" rx="6" fill="#FFFFFF" stroke="#E8833A" stroke-width="3"/>
+  <text x="924" y="324" font-size="17" font-weight="700" fill="#C2621F">✳ Claude Code</text>
+  <rect x="924" y="340" width="204" height="40" rx="8" fill="#F3F4F6"/>
+  <text x="936" y="366" font-size="14" fill="#14213D">Vibe Chat を作って…</text>
+  <rect x="924" y="474" width="204" height="36" rx="8" fill="#FFFFFF" stroke="#E8833A"/>
+  <text x="936" y="497" font-size="13" fill="#9CA3AF">プロンプトを入力</text>
+
+  <!-- Labels under windows -->
+  <text x="300" y="578" font-size="22" font-weight="700" fill="#C2621F" text-anchor="middle">① AI チューター（研修の先生）</text>
+  <text x="300" y="608" font-size="17" fill="#4A5568" text-anchor="middle">手順を案内し、画面を確認する。作業はしない</text>
+  <text x="900" y="578" font-size="22" font-weight="700" fill="#14213D" text-anchor="middle">② Claude Code（開発の相手）</text>
+  <text x="900" y="608" font-size="17" fill="#4A5568" text-anchor="middle">ファイルを書き、コマンドを実行する</text>
+
+  <rect x="40" y="630" width="1120" height="40" rx="10" fill="#14213D"/>
+  <text x="600" y="657" font-size="19" fill="#F7F6F2" text-anchor="middle">迷ったら：「研修の進め方」は ① に、「アプリを作る作業」は ② の ✳ パネルに</text>
+</svg>

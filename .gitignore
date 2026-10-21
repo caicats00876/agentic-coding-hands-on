@@ -141,3 +141,10 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Claude Code
+.claude/settings.local.json
+**/.claude/settings.local.json
+
+# AI チューターのナレッジ（build-knowledge.ps1 の出力）
+tutor/knowledge/
