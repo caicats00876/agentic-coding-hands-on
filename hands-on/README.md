@@ -1,7 +1,7 @@
 # hands-on 素材
 
 研修で使うプロンプトと設定ファイルです。各 Day のドキュメントの指示に従って、コピーして使ってください。
-書籍（[AgenticCoding.pdf](../docs/ref/AgenticCoding.pdf)）の付録をもとに、Claude Code と GitHub Codespaces 向けに書き換えています。
+書籍『[Agentic Coding　生成AI時代のシステム開発入門](https://www.sbcr.jp/product/4815636593/)』（渡邉 洋平 著、SBクリエイティブ）の付録をもとに、Claude Code と GitHub Codespaces 向けに書き換えています。
 
 ## Day1：Vibe Coding 体験
 
