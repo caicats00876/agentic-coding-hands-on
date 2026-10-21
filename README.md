@@ -1,7 +1,7 @@
 # Agentic Coding 体験研修（5日間）
 
 AI エージェントと一緒にシステムを作る「Agentic Coding」を、**手を動かして体験する**ための5日間の研修です。
-教材のベースは [docs/ref/AgenticCoding.pdf](docs/ref/AgenticCoding.pdf) です。書籍の内容を網羅するのではなく、体験を通じて「AI にどう委ねればよいか」を身につけることを目的としています。
+教材のベースは、書籍『[Agentic Coding　生成AI時代のシステム開発入門](https://www.sbcr.jp/product/4815636593/)』（渡邉 洋平 著、SBクリエイティブ）です。書籍の内容を網羅するのではなく、体験を通じて「AI にどう委ねればよいか」を身につけることを目的としています。
 
 この研修は**自学自習**で進めます。人間の講師の代わりに **AI チューター**（Claude）が、手順の案内、ミニ講義、画面の確認、振り返りの聞き手を務めます。
 
@@ -121,7 +121,6 @@ docs/
   管理者向け準備.md
   slides/               研修説明用の HTML スライド
   worksheets/           比較シート、日報、振り返り発表、自己評価
-  ref/AgenticCoding.pdf ベース教材
 hands-on/
   day1〜day5/           コピペ用のプロンプトと設定テンプレート
 tutor/
