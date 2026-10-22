@@ -41,7 +41,7 @@ AI エージェントの速さと手軽さを体験させます。完成度に�
 | 4. GitHub アカウント | 自社のメールアドレスで登録し、メール認証まで済んだか |
 | 5. fork | 自分のアカウントに fork したか（fork の URL を再開メモに書く） |
 | 6. 待ち時間（idle timeout） | https://github.com/settings/codespaces の Default idle timeout を 120 分にしたか。作業中に止まると、Vibe Chat の作成中に中断する |
-| 7. Codespace | recovery mode になっていないか。✳ が出ないときは、拡張機能の画面で「Claude Code for VS Code」（提供元 Anthropic）を受講者にインストールしてもらう。左下のブランチ、Claude のアイコン（✳）、`node -v` が v24 系か。手順書の VS Code の画面の図で、5つの場所を確認させる |
+| 7. Codespace | **New with options で Machine type を 2-core** にしたか（4-core は利用枠が2倍の速さで減る）。recovery mode になっていないか。✳ が出ないときは、拡張機能の画面で「Claude Code for VS Code」（提供元 Anthropic）を受講者にインストールしてもらう。左下のブランチ、Claude のアイコン（✳）、`node -v` が v24 系か。手順書の VS Code の画面の図で、5つの場所を確認させる |
 | 8. 信頼ダイアログとクリップボード | 「フォルダーを信頼して続行」を選んだか。クリップボードを許可し、貼り付けができるか |
 
 *   Claude in Chrome がつながるまでは、受講者の報告やスクリーンショットで確認します。
