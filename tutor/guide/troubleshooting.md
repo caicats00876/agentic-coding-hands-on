@@ -13,7 +13,8 @@
 | 拡張機能のインストールで「発行元を信頼しますか?」と出る | 研修で必須の拡張機能は Claude Code だけ（提供元 Anthropic は認証済み）。それ以外の拡張機能は入れなくてよいので、キャンセルしてもらう |
 | 作業中に Codespace が止まった | アイドルタイムアウト（初期値 30分）で停止した。https://github.com/codespaces から開き直せば、作業内容は残っている。https://github.com/settings/codespaces の Default idle timeout を 120 分にしてもらう |
 | 「このフォルダー内のファイルの作成者を信頼しますか?」が出る | 「フォルダーを信頼して続行」。信頼しないと制限モードになる |
-| Codespaces が重い | 不要な dev サーバーを止める。マシンタイプの変更は利用枠に影響するので、受講者に判断してもらう |
+| Codespaces が重い | まず不要な dev サーバーを止める。それでも遅すぎて進められない場合だけ、4-core に変える（https://github.com/codespaces → 「…」→ **Change machine type**）。利用枠が2倍の速さで減るので、受講者に判断してもらい、終わったら 2-core に戻すよう勧める |
+| Codespace の作成で 2-core が選べない（Below dev container requirements と出る） | 受講者の fork の `.devcontainer/devcontainer.json` が古い（4 コアが条件になっている）。研修担当者に連絡してもらう |
 | Codespaces の利用枠が足りなくなりそう | 使わないときは Codespace を停止する（github.com/codespaces →「…」→ Stop codespace）。「Auto-delete codespace」に注意する |
 | ポートを開いても画面が出ない | サーバーが `0.0.0.0` で待ち受けているか、PORTS タブで転送されているかを確認する |
 | WebSocket がつながらない | フロントエンドの接続先が `localhost` 固定になっていないか確認する（Codespaces では転送先の URL を使う） |
