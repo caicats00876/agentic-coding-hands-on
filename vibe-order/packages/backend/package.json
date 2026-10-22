@@ -1,0 +1,16 @@
+{
+	"name": "@vibe-order/backend",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "node --watch src/index.ts",
+		"build": "tsc --noEmit && tsc -p tsconfig.build.json",
+		"start": "node dist/index.js"
+	},
+	"dependencies": {
+		"@hono/node-server": "2.1.5",
+		"@vibe-order/shared": "0.0.0",
+		"hono": "4.13.13"
+	}
+}
