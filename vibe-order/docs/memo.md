@@ -58,3 +58,47 @@ CLAUDE.md の Policy に従い、コメントアウト、処理の削除、ラ�
 
 - biomejs.dev、tailwindcss.com、playwright.dev、typicode.github.io/husky、www.typescriptlang.org は 404 だった。これらは公式ドキュメントを直接参照する
 - llms.txt は目次で、中身は各ページ（.md）へのリンクになっている。詳しい内容が必要になったら、リンク先のページを取得する
+
+## 2026-10-22 frontend のライブラリを追加（Iteration 4）
+
+Iteration 0 で決めた採用版を、`--save-exact` で `packages/frontend` に追加した。
+
+- dependencies: react 19.3.0、react-dom 19.3.0
+- devDependencies: @types/react 19.3.0、@types/react-dom 19.3.0、vite 8.3.4、@vitejs/plugin-react 6.1.2、tailwindcss 4.3.3、@tailwindcss/vite 4.3.3
+- 追加後の `npm audit` は脆弱性 0 件
+
+## 2026-10-22 E2E 用のライブラリを追加（Iteration 5）
+
+- devDependencies（frontend）: @playwright/test 1.64.0（Apache-2.0、Iteration 0 で決めた採用版）
+- ブラウザは `npx playwright install --with-deps chromium` で Chromium だけを入れた（OS のパッケージも apt で入る）
+- Vitest の既定の include（`**/*.{test,spec}.?(c|m)[jt]s?(x)`）が `e2e/*.spec.ts` も拾うため、frontend の `vite.config.ts` で `e2e/**` を除外した
+
+## 2026-10-23 カバレッジを設定（Iteration 6）
+
+- devDependencies（root）: @vitest/coverage-v8 5.0.4（MIT、Iteration 0 で決めた採用版）。追加後の `npm audit` は脆弱性 0 件
+- 設定はルートの `vitest.config.ts` に書いた。projects 構成では `coverage` はルートの設定だけが効く（https://vitest.dev/guide/projects.md 「`coverage`: coverage is done for the whole process」）
+- `coverage.include` を `packages/*/src/**/*.{ts,tsx}` にした。既定ではテストで import されたファイルしか集計されず、テストの無いファイルが見えないため
+- 閾値: lines / functions / branches / statements すべて 80%
+- 対象から外したファイル（起動処理だけで、ユニットテストの対象にしない）
+  - `packages/backend/src/index.ts`（`serve()` でポート 3000 を開くだけ。動作は `curl localhost:3000/health` で確認済み）
+  - `packages/frontend/src/main.tsx`（`createRoot` で描画するだけ。動作は E2E で確認する）
+- テストファイル（`*.test.{ts,tsx}`）も対象外にした
+
+## 2026-10-23 コミット前フックと gitleaks を設定（Iteration 7）
+
+- devDependencies（root）: husky 9.1.7（MIT）、lint-staged 17.6.0（MIT）。Iteration 0 で決めた採用版。追加後の `npm audit` は脆弱性 0 件
+- gitleaks 8.30.1（MIT、Go 製の単体バイナリ）を `.devcontainer/install-gitleaks.sh` で導入する。版はこのスクリプトだけで管理し、公式の checksums.txt で sha256 を検証してから `/usr/local/bin` に置く
+- `.devcontainer/devcontainer.json` の `postCreateCommand` をオブジェクト形式に変え、既存の Claude 設定の処理（`claude`）を残したまま `gitleaks` を追加した
+- Husky はサブディレクトリ構成のため `prepare` を `cd .. && husky vibe-order/.husky` にした（https://typicode.github.io/husky/how-to.html 「Project not in Git root directory」）
+- `.husky/pre-commit` の処理順と、計画からの変更点
+  - gitleaks は `cd vibe-order` の**前**に、リポジトリのルートで実行する（計画では cd の後だった）。`vibe-order/` の外に stage されたファイルも検査するため
+  - 先頭に `set -e` を入れた。Husky は `sh -e` で実行するが、`sh vibe-order/.husky/pre-commit` で直接実行したときに、gitleaks が検出してもテストまで進んで exit 0 になったため
+- lint-staged の Biome には `--files-ignore-unknown=true` を付けた。Biome が扱えない種類のファイル（.md など）を stage したときにエラーにしないため
+
+## 2026-10-23 GitHub Actions CI を追加（Iteration 8）
+
+- `.github/workflows/vibe-order-ci.yml`（リポジトリのルート）を追加した
+- 使う action: `actions/checkout@v7`（最新 v7.0.1、2026-07-20）、`actions/setup-node@v7`（最新 v7.1.0、2026-10-08）。`gh release view` で確認した実装時点の最新メジャー版
+- job `check-test-build`: `npm ci` → `npm run check` → `npm run test` → `npm run build`（`working-directory: vibe-order`、`HUSKY: 0`）
+- job `gitleaks`: `fetch-depth: 0` で履歴全体を取得し、`.devcontainer/install-gitleaks.sh` で入れた gitleaks で `gitleaks git --redact --verbose` を実行する。`gitleaks-action` は使わない
+- 計画に加えたもの: `actions/checkout` に `persist-credentials: false` を付けた。checkout 後に git の認証情報を残す必要がないため

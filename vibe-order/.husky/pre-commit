@@ -1,0 +1,13 @@
+# Husky は sh -e で実行するが、sh で直接実行したときも失敗で止まるようにする
+set -e
+
+# フックはリポジトリのルートで実行される。gitleaks はリポジトリ全体の stage を対象にするため、cd の前に実行する
+if ! command -v gitleaks >/dev/null 2>&1; then
+	echo "gitleaks が見つかりません。bash .devcontainer/install-gitleaks.sh でインストールしてください" >&2
+	exit 1
+fi
+gitleaks git --pre-commit --staged --redact
+
+cd vibe-order
+npx lint-staged
+npm run test

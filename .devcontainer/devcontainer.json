@@ -8,7 +8,10 @@
     "cpus": 2,
     "memory": "8gb"
   },
-  "postCreateCommand": "mkdir -p ~/.claude && [ -f ~/.claude/settings.json ] || echo '{\"language\": \"japanese\"}' > ~/.claude/settings.json",
+  "postCreateCommand": {
+    "claude": "mkdir -p ~/.claude && [ -f ~/.claude/settings.json ] || echo '{\"language\": \"japanese\"}' > ~/.claude/settings.json",
+    "gitleaks": "bash .devcontainer/install-gitleaks.sh"
+  },
   "forwardPorts": [3000, 5173],
   "portsAttributes": {
     "3000": { "label": "backend" },

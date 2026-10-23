@@ -1,0 +1,40 @@
+name: vibe-order CI
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+env:
+  HUSKY: 0
+
+jobs:
+  check-test-build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: vibe-order
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: vibe-order/package-lock.json
+      - run: npm ci
+      - run: npm run check
+      - run: npm run test
+      - run: npm run build
+
+  # リポジトリ全体の履歴を検査する。--no-verify でフックを回避されても、マージ前に検出するため
+  gitleaks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - run: bash .devcontainer/install-gitleaks.sh
+      - run: gitleaks git --redact --verbose
